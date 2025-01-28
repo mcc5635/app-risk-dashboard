@@ -1,17 +1,13 @@
 export type SiteConfig = typeof siteConfig
 
 export const siteConfig = {
-  name: "Shadcn Table",
+  name: "Orbit",
   description:
-    "Shadcn table component with server side sorting, pagination, and filtering",
+    "DeFi Risk Management Made Easy.",
   mainNav: [
     {
-      title: "Client-Controlled",
+      title: "",
       href: "/",
-    },
-    {
-      title: "Server-Controlled",
-      href: "/server-controlled",
     },
   ],
   links: {

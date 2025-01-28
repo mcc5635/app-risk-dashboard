@@ -11,11 +11,11 @@ import {
     AlertDialogHeader,
     AlertDialogTitle,
   } from "@/components/ui/alert-dialog";
-  import { TaskType } from "@/lib/validations/schema";
+  import { VaultType } from "@/lib/validations/schema";
   import { Button } from "@/components/ui/button";
   
   type DeleteProps = {
-    task: TaskType;
+    task: VaultType;
     isOpen: boolean;
     showActionToggle: (open: boolean) => void;
   };
@@ -30,10 +30,7 @@ import {
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>Are you sure absolutely sure ?</AlertDialogTitle>
-            <AlertDialogDescription>
-              This action cannot be undone. You are about to delete Task
-              Details of <b>{task.title}</b>
-            </AlertDialogDescription>
+            
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>

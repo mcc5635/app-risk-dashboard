@@ -19,7 +19,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 import { Copy, Eye, MoreHorizontal, Pencil, Trash2 } from "lucide-react";
-import { taskSchema } from "@/lib/validations/schema";
+import { vaultSchema } from "@/lib/validations/schema"; // ✅ Ensure you're using vaultSchema, not taskSchema
 import { label_options } from "@/components/filters";
 import EditDialog from "@/components/modals/edit-modal";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
@@ -36,10 +36,12 @@ export function DataTableRowActions<TData>({
     React.useState<React.ReactNode | null>(null);
   const [showDeleteDialog, setShowDeleteDialog] =
     React.useState<boolean>(false);
-  const task = taskSchema.parse(row.original);
+
+  // ✅ Ensure we use vaultSchema, not taskSchema
+  const vault = vaultSchema.parse(row.original);
 
   const handleEditClick = () => {
-    setDialogContent(<EditDialog task={task} />);
+    setDialogContent(<EditDialog vault={vault} />);
   };
 
   return (
@@ -57,15 +59,14 @@ export function DataTableRowActions<TData>({
         <DropdownMenuContent align='end' className='w-[200px]'>
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
           <DropdownMenuItem
-            onClick={() => navigator.clipboard.writeText(task.id)}
+            onClick={() => navigator.clipboard.writeText(vault.id)}
           >
             <Copy className='mr-2 h-4 w-4' />
-            Copy Task ID
+            Copy Vault ID
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DialogTrigger asChild onClick={() => {}}>
             <DropdownMenuItem>
-              {" "}
               <Eye className='mr-2 h-4 w-4' />
               View Details
             </DropdownMenuItem>
@@ -81,13 +82,13 @@ export function DataTableRowActions<TData>({
             className='text-red-600'
           >
             <Trash2 className='mr-2 h-4 w-4' />
-            Delete Details
+            Delete Vault
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuSub>
             <DropdownMenuSubTrigger>Labels</DropdownMenuSubTrigger>
             <DropdownMenuSubContent>
-              <DropdownMenuRadioGroup value={task.label}>
+              <DropdownMenuRadioGroup value={vault.label || ""}>
                 {label_options.map((label) => (
                   <DropdownMenuRadioItem key={label.value} value={label.value}>
                     <label.icon className="w-4 h-4 mr-2" />
@@ -100,11 +101,7 @@ export function DataTableRowActions<TData>({
         </DropdownMenuContent>
       </DropdownMenu>
       {dialogContent && <DialogContent>{dialogContent}</DialogContent>}
-      <DeleteDialog
-        task={task}
-        isOpen={showDeleteDialog}
-        showActionToggle={setShowDeleteDialog}
-      />
+      
     </Dialog>
   );
 }

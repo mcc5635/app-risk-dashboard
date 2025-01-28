@@ -399,7 +399,8 @@ export const networks = [
 
 export const vaultSchema = z.object({
   id: z.string(),
-  network: z.string(), // Allow any network value
+  network: z.string(),
+  label: z.string().optional().default("Unknown"),
   supplyToken: z.string().optional().default("Unknown"),
   netAPY: z.string().optional().default("N/A"),
   totalSupply: z.string().optional().default("N/A"),
